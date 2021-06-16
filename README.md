@@ -15,7 +15,7 @@ Gene expression stability is most robustly quantified by the mean within-tumor s
 Note: this package requires R>=3.5. 
 
 - Install latest version of robustOffsets directly from Github using `devtools`:
-  ```
+```r
 library(devtools)
 devtools::install_github("kkmkoudijs/robustOffsets")
 ```
