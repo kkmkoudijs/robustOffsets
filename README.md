@@ -27,7 +27,7 @@ The main function in the package is called getRobustOffsets() and can be used in
 2. Or if applicable, the aforementioned gene expression matrix with an additional data.frame specifying to which study a sample belonged to. 
 
 Included with this package are the TCGA datasets with which the main result of the paper can be replicated. 
-We start with loading the package and inspecting the included example datasets:
+We start with loading the package and inspecting the included example datasets. The final 2 command use getRobustOffsets() in the 2 different ways.
 
 ```r
 library(robustOffset)
@@ -39,30 +39,27 @@ dim(genexpMatrix_example)
 # and 2 columns (Study_ID and Sample_ID):
 sampleMeta_example[1:5,]
 dim(sampleMeta_example) 
-```
 
-Using the getRobustOffsets() function in two different ways:
-```r
 robustOffsets_without_using_metainformation <-
   getRobustOffsets(genexpMatrix_example)
 
 robustOffsets_using_metainformation <-
   getRobustOffsets(genexpMatrix_example, sampleMeta_example)
 ```
-If getRobustOffsets() is used without the sample meta-information the output is 
+
+Using the getRobustOffsets() function in two different ways produces slightly different output:
+1. If getRobustOffsets() is used without the sample meta-information the output is 
 a data.frame called sampleOffsets, containing the Sample_ID, the log of the sampleOffset (log_sampleOffset)
 and the sampleOffset. 
-
-If getRobustOffsets() is used with the sample meta-information the output is a list
+2. If getRobustOffsets() is used with the sample meta-information the output is a list
 with 2 data.frames: sampleOffsets and studyOutput (containing the study offsets including additional statistics).
 
+The following code thus allows for directly comparing the sampleOffsets produced using both methods:
 ```r
-str(robustOffsets_using_metainformation)
-
 comparison_df <-
   merge(
-    x = robustOffsets_using_metainformation$sampleOffsets,
-    y = robustOffsets_without_using_metainformation,
+    x = robustOffsets_without_using_metainformation,
+    y = robustOffsets_using_metainformation$sampleOffsets,
     by = "Sample_ID"
   )
 
