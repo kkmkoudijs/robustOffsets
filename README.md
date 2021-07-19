@@ -19,3 +19,28 @@ Note: this package requires R>=3.5.
 library(devtools)
 devtools::install_github("kkmkoudijs/robustOffsets")
 ```
+
+## How to use
+```r
+library(robustOffset)
+
+### Running with study meta information: ###
+robustOffsets_using_metainformation <-
+  getRobustOffsets(genexpMatrix_example, sampleMeta_example)
+
+### Running without study meta information: ###
+robustOffsets_without_using_metainformation <-
+  getRobustOffsets(genexpMatrix_example)
+
+comparison_df <-
+  merge(
+    x = robustOffsets_using_metainformation$sampleOffsets,
+    y = robustOffsets_without_using_metainformation,
+    by = "Sample_ID"
+  )
+
+summary(lm(sampleOffset.y ~ sampleOffset.x, data = comparison_df))
+# Produces nearly identical results: R-squared = 0.9998
+```
+
+
