@@ -63,9 +63,9 @@ getRobustOffsets <- function (genexpMatrix, sampleMeta = NULL)
       genexpMatrix <- turn_genexprMatrix_in_long_format(genexpMatrix)
       projects <- unique(sampleMeta$Study_ID)
       output <- list()
-      output$projectOutput <- data.frame(Study_ID = projects,
-                                         projectOffset = NA, log_projectOffset = NA, log_projectOffset_SE = NA,
-                                         log_projectOffset_t.value = NA, SD_sampleOffsets = NA)
+      output$studyOutput <- data.frame(Study_ID = projects,
+                                         studyOffset = NA, log_studyOffset = NA, log_studyOffset_SE = NA,
+                                         log_studyOffset_t.value = NA, SD_sampleOffsets = NA)
       genexpMatrix <- merge(x = genexpMatrix, y = sampleMeta,
                             by.x = "Sample", by.y = "Sample_ID")
       mean_genexp_byProject <- stats::aggregate(expr ~
@@ -94,12 +94,12 @@ getRobustOffsets <- function (genexpMatrix, sampleMeta = NULL)
         sample_offsets_temp <- sample_offsets_temp[,
                                                    c("Sample_ID", "log_sampleOffset")]
         sample_offsets_temp$sampleOffset <- exp(sample_offsets_temp$log_sampleOffset)
-        output$projectOutput[i, "projectOffset"] <- exp(stats::coef(model_output_summary)[1,
+        output$studyOutput[i, "studyOffset"] <- exp(stats::coef(model_output_summary)[1,
                                                                                           1])
-        output$projectOutput[i, c("log_projectOffset",
-                                  "log_projectOffset_SE", "log_projectOffset_t.value")] <- stats::coef(model_output_summary)[1,
+        output$studyOutput[i, c("log_studyOffset",
+                                  "log_studyOffset_SE", "log_studyOffset_t.value")] <- stats::coef(model_output_summary)[1,
                                   ]
-        output$projectOutput[i, "SD_sampleOffsets"] <- stats::sd(sample_offsets_temp$sampleOffset)
+        output$studyOutput[i, "SD_sampleOffsets"] <- stats::sd(sample_offsets_temp$sampleOffset)
         if (i == 1) {
           output$sampleOffsets <- sample_offsets_temp
         }
