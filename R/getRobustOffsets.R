@@ -8,8 +8,21 @@
 #'     - dataframe with sample offsets.
 #' @examples
 #' \dontrun{
-#' getRobustOffsets <- function(genexpMatrix)
-#' getRobustOffsets <- function(genexpMatrix, sampleMeta)
+#' robustOffsets_without_using_metainformation <-
+#'    getRobustOffsets(genexpMatrix = genexpMatrix_example)
+#'
+#' robustOffsets_using_metainformation <-
+#'    getRobustOffsets(genexpMatrix = genexpMatrix_example, sampleMeta = sampleMeta_example)
+#'
+#' comparison_df <-
+#'    merge(
+#'       x = robustOffsets_without_using_metainformation,
+#'       y = robustOffsets_using_metainformation$sampleOffsets,
+#'       by = "Sample_ID"
+#'    )
+#'
+#' summary(lm(sampleOffset.y ~ sampleOffset.x, data = comparison_df))
+#'
 #' }
 #' @export
 
