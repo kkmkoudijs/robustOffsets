@@ -53,7 +53,7 @@ This produces slightly different output in both cases:
 1. If getRobustOffsets() is used without the sample meta-information the output is a data.frame called sampleOffsets, 
 containing the Sample_ID, the log of the sampleOffset (log_sampleOffset) and the sampleOffset. 
 2. If getRobustOffsets() is used with the sample meta-information the output is a list
-with 2 data.frames: sampleOffsets and studyOutput (containing the study offsets including additional statistics).
+with 2 data.frames: sampleOffsets and studyOutput. studyOutput contains the study offsets including additional statistics, such as the log_studyOffset and standard error and the standard deviation of the sampleOffsets within the study.
 
 The following code thus allows for directly comparing the sampleOffsets produced using both methods:
 ```r
